@@ -64,6 +64,7 @@ static void usage(FILE *stream, const char *prgname)
         prgname,prgname);
 }
 
+/* XXX: magic starts here */
 int main(int argc, char **argv)
 {
     if (argc < 2) {
@@ -71,13 +72,16 @@ int main(int argc, char **argv)
         return 1;
     }
     if (!strcmp(argv[1], "socket")) {
+        /* XXX: in case of socket */
         return swtpm_main(argc-1, &argv[1], argv[0], "socket");
 #ifdef WITH_CHARDEV
     } else if (!strcmp(argv[1], "chardev")) {
+        /* XXX: in case of char dev */
         return swtpm_chardev_main(argc-1, &argv[1], argv[0], "chardev");
 #endif
 #ifdef WITH_CUSE
     } else if (!strcmp(argv[1], "cuse")) {
+        /* XXX: in case of cuse */
         return swtpm_cuse_main(argc-1, &argv[1], argv[0], "cuse");
 #endif
     } else if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")) {

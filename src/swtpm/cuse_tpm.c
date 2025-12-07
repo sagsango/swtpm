@@ -1317,6 +1317,16 @@ static const struct cuse_lowlevel_ops clops = {
     .init_done = ptm_init_done,
 };
 
+/* XXX: here we register the cuse
+ *      because device already has been exposed
+ *      and user will do ioctl on it
+ *      and we have to fill all the ioctl handler
+ *      and other opes which are present in the:
+ *          struct cuse_lowlevel_ops clops;
+ *
+ *      now to see the full code flow, we need the
+ *      cuse/fuse libraries too
+ */
 /* ptm_cuse_lowlevel_main is like cuse_lowlevel_main with the difference that
  * it uses a global ptm_fuse_session so we can call fuse_session_exit() on it
  * for a graceful exit with cleanups.
@@ -1539,6 +1549,7 @@ int swtpm_cuse_main(int argc, char **argv, const char *prgname, const char *ifac
         goto exit;
     }
 
+    /* XXX: create device file */
     n = snprintf(path, sizeof(path), "/dev/%s", devname);
     if (n < 0) {
         logprintf(STDERR_FILENO,
@@ -1576,6 +1587,7 @@ int swtpm_cuse_main(int argc, char **argv, const char *prgname, const char *ifac
     FILE_OPS_LOCK = g_mutex_new();
 #endif
 
+    /* XXX: register cuse handlers */
     ret = ptm_cuse_lowlevel_main(1, argv, &cinfo, &clops, &param);
 
 exit:

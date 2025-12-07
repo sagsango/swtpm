@@ -389,6 +389,7 @@ int swtpm_main(int argc, char **argv, const char *prgname, const char *iface)
     }
 
     if (handle_ctrlchannel_options(ctrlchdata, &mlp.cc) < 0 ||
+        /* XXX: create the server */
         handle_server_options(serverdata, &server) < 0) {
         goto exit_failure;
     }
@@ -441,6 +442,7 @@ int swtpm_main(int argc, char **argv, const char *prgname, const char *iface)
         }
     }
 
+    /* XXX: pid file write */
     if (pidfile_write(getpid()) < 0) {
         goto exit_failure;
     }
@@ -468,6 +470,7 @@ int swtpm_main(int argc, char **argv, const char *prgname, const char *iface)
     if (install_sighandlers(notify_fd, sigterm_handler) < 0)
         goto error_no_sighandlers;
 
+    /* XXX: main loop */
     rc = mainLoop(&mlp, notify_fd[0]);
 
     install_sighandlers(notify_fd, NULL);

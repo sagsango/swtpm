@@ -272,7 +272,9 @@ int swtpm_chardev_main(int argc, char **argv, const char *prgname, const char *i
         case 'c':
             if (mlp.fd >= 0)
                 continue;
-
+            /* XXX:socket like chardev creation 
+             *     its just a file?
+             */
             mlp.fd = open(optarg, O_RDWR);
             if (mlp.fd < 0) {
                 logprintf(STDERR_FILENO, "Cannot open %s: %s\n",
@@ -502,6 +504,7 @@ int swtpm_chardev_main(int argc, char **argv, const char *prgname, const char *i
     mlp.flags |= MAIN_LOOP_FLAG_USE_FD | MAIN_LOOP_FLAG_KEEP_CONNECTION | \
       MAIN_LOOP_FLAG_END_ON_HUP;
 
+    /* XXX: main loop */
     rc = mainLoop(&mlp, notify_fd[0]);
 
     install_sighandlers(notify_fd, NULL);
